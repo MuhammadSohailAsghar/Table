@@ -276,8 +276,11 @@ function clearVal() {
 };
 
 function updateData(){
-    let myform = document.getElementById("invoice-form");
-    let fd = new FormData(myform );
+    var myform = document.getElementById("form_data");
+    var fd = new FormData(myform);
+
+    var billNo = $('#billNo').val();
+
     $.ajax({
         url: "update.php",
         data: fd,
@@ -286,7 +289,10 @@ function updateData(){
         contentType: false,
         type: 'POST',
         success: function (response) {
-            // do something with the result
+            if(response == 'Success'){
+                window.location = "http://localhost/table/search.php?billNo="+billNo;
+            }
+
         }
     });
 };

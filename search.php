@@ -1,7 +1,7 @@
 <?php
 include 'config/database.php';
 
-$billNo = $_POST['billNo'];
+$billNo = $_REQUEST['billNo'];
 $billNo = empty($billNo) ? 0 : $billNo;
 
 $billQuery = "SELECT * FROM `invoicedata` WHERE BillNo = '$billNo'";
@@ -15,7 +15,7 @@ $billDetails = mysqli_query($conn, $billValues);
 // mysqli_fetch_all()
 // $result = mysqli_fetch_all($billDetails);
 
-// print_r($result);
+// print_r($billDetails);
 
 
 
@@ -87,9 +87,9 @@ $billDetails = mysqli_query($conn, $billValues);
             </ul>
         </div>
     </header>
-    <form action="#" method="POST" id="invoice-form">
+    <form action="#" method="POST" id="form_data">
 
-        <input type="hidden" value="0" id="ID" name="numrow">
+        <input type="hidden" value="<?= $billDetails->num_rows?>" id="ID" name="numrow">
 
         <div>
             <heading>
@@ -112,7 +112,7 @@ $billDetails = mysqli_query($conn, $billValues);
                 $i = 1;
 
                 while ($row = mysqli_fetch_assoc($billDetails)) {
-                    print_r($row);
+                    // print_r($row);
                     $id = $row['id'];
                     $name = $row['name'];
                     $price = $row['price'];
@@ -196,7 +196,7 @@ $billDetails = mysqli_query($conn, $billValues);
 
         <br>
         <br>
-        <input type="number" name="billNo" id="billNo">
+        <input type="number" name="billNo" id="billNo" value="<?= $billNo ?>">
         <br>
         <br>
 
@@ -205,7 +205,7 @@ $billDetails = mysqli_query($conn, $billValues);
         <br>
 
 
-        <button type="button" onclick="updateData()">Update</button>
+        <button type="button" onclick="updateData();">Update</button>
     </form>
 
     <script src="main.js"></script>
